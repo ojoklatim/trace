@@ -6,7 +6,7 @@ This project is configured to build as a fully prerendered static site, ready fo
 
 - **Framework preset**: None
 - **Build command**: `npm run build`
-- **Build output directory**: `dist`
+- **Build output directory**: `dist/client`
 - **Node version**: `20` (set env var `NODE_VERSION=20`)
 
 ## What's configured
@@ -20,7 +20,7 @@ This project is configured to build as a fully prerendered static site, ready fo
 
 ```bash
 npm run build
-npx serve dist
+npx serve dist/client
 ```
 
 Then open the printed URL — every route should load directly without a server.
