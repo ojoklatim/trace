@@ -147,8 +147,47 @@
     border-color: var(--color-border);
   }
 
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: ui-serif, "Iowan Old Style", "Apple Garamond", Palatino, Georgia, serif;
+  }
+
+  .font-sans {
+    font-family: ui-sans-serif, system-ui, -apple-system, "Inter", sans-serif;
+  }
+
+  .font-mono {
+    font-family: ui-monospace, "JetBrains Mono", "SF Mono", monospace;
   }
 }
+
+@keyframes drift {
+  0%, 100% { transform: translateY(0px) translateX(0px); }
+  50% { transform: translateY(-20px) translateX(10px); }
+}
+@keyframes ripple {
+  0% { transform: scale(0.6); opacity: 0.6; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+@keyframes rain-fall {
+  0% { transform: translateY(-20px); opacity: 0; }
+  20% { opacity: 0.7; }
+  100% { transform: translateY(140px); opacity: 0; }
+}
+
+.animate-drift { animation: drift 8s ease-in-out infinite; }
+.animate-ripple { animation: ripple 3s ease-out infinite; }
+.animate-pulse-soft { animation: pulse-soft 2.5s ease-in-out infinite; }
+
+.text-balance { text-wrap: balance; }
+.text-pretty { text-wrap: pretty; }
