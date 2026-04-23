@@ -6,7 +6,11 @@
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
+// Configured for static export to Cloudflare Pages:
+// - cloudflare: false  → disable the Worker build plugin so output is plain static assets
+// - tanstackStart.prerender → emit static HTML for every crawled route
 export default defineConfig({
+  cloudflare: false,
   tanstackStart: {
     prerender: {
       enabled: true,
