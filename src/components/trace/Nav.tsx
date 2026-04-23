@@ -21,7 +21,7 @@ export function Nav() {
             TRACE
           </span>
         </a>
-        <nav className="hidden items-center gap-8 font-sans text-sm text-[var(--forest-deep)]/80 md:flex">
+        <nav className="hidden items-center gap-8 font-sans text-sm text-[var(--forest-deep)]/70 md:flex">
           <a href="#problem" className="hover:text-[var(--forest)]">Problem</a>
           <a href="#solution" className="hover:text-[var(--forest)]">Solution</a>
           <a href="#system" className="hover:text-[var(--forest)]">System</a>
