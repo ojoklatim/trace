@@ -22,7 +22,7 @@ export function Reveal({
   return (
     <MotionTag
       className={className}
-      initial="hidden"
+      initial={false}
       whileInView="show"
       viewport={{ once: true, margin: "-80px" }}
       variants={variants}
@@ -41,8 +41,9 @@ export function StaggerWords({ text, className = "" }: { text: string; className
         <motion.span
           key={i}
           className="inline-block"
-          initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+          initial={false}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: i * 0.05, ease: [0.22, 1, 0.36, 1] }}
         >

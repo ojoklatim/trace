@@ -57,8 +57,8 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <div id="debug-marker" style="position:fixed;top:0;left:0;background:red;color:white;z-index:9999;padding:4px">DEBUG</div>
         {children}
+
 
         <Scripts />
       </body>
