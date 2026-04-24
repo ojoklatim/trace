@@ -88,7 +88,7 @@
   --forest-soft: oklch(0.45 0.06 145);
   --tan-warm: oklch(0.78 0.08 75);
   --tan-soft: oklch(0.88 0.04 80);
-  --paper: oklch(0.965 0.018 85);
+  --paper: #e0f2fe; /* Light blue for debugging */
   --gradient-hero: linear-gradient(180deg, oklch(0.965 0.018 85) 0%, oklch(0.92 0.03 80) 100%);
   --gradient-forest: linear-gradient(135deg, oklch(0.32 0.07 150), oklch(0.22 0.05 150));
   --shadow-soft: 0 1px 2px oklch(0.22 0.04 150 / 0.06), 0 8px 30px oklch(0.22 0.04 150 / 0.06);
