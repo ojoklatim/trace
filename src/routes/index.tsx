@@ -111,7 +111,7 @@ function Hero() {
 
       <div className="mx-auto max-w-3xl px-6">
         <motion.p
-          initial={{ opacity: 0, y: 8 }}
+          initial={{ opacity: 1, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
           className="mb-10 font-sans text-xs uppercase tracking-[0.22em] text-[var(--forest)]/70"
@@ -120,7 +120,7 @@ function Hero() {
         </motion.p>
 
         <motion.h1
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 1, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.1 }}
           className="text-balance text-5xl leading-[1.05] tracking-tight md:text-7xl"
@@ -129,11 +129,12 @@ function Hero() {
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 1, y: 0 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.25 }}
           className="mt-6 max-w-xl font-sans text-lg leading-relaxed text-[var(--forest-deep)]/70 md:text-xl"
         >
+
           Terrain Runoff Analysis &amp; City Engineering. An AI-powered smart drainage
           intelligence platform for Kampala.
         </motion.p>

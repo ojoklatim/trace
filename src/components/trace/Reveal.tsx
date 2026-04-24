@@ -2,9 +2,10 @@ import { motion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 
 const variants: Variants = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 1, y: 0 },
   show: { opacity: 1, y: 0 },
 };
+
 
 export function Reveal({
   children,
