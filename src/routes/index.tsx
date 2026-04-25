@@ -8,13 +8,13 @@ import { ContourTerrain } from "@/components/trace/MotionGraphics";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "TRACE — Terrain Runoff Analysis & City Engineering" },
+      { title: "TRACE: Terrain Runoff Analysis & City Engineering" },
       {
         name: "description",
         content:
-          "TRACE is an AI-powered smart drainage intelligence platform for Kampala — 3D terrain modeling, water-flow simulation, and drainage recommendations built entirely on open data.",
+          "TRACE is an AI-powered smart drainage intelligence platform for Kampala: 3D terrain modeling, water-flow simulation, and drainage recommendations built entirely on open data.",
       },
-      { property: "og:title", content: "TRACE — Terrain Runoff Analysis & City Engineering" },
+      { property: "og:title", content: "TRACE: Terrain Runoff Analysis & City Engineering" },
       {
         property: "og:description",
         content:
@@ -151,7 +151,7 @@ function Summary() {
       <div className="space-y-6 font-sans text-lg leading-relaxed text-[var(--forest-deep)]/80">
         <p>
           Kampala, Uganda faces a severe and growing urban flooding crisis. Roads overflow during
-          heavy rains, infrastructure is damaged, and lives are lost — all due to an outdated and
+          heavy rains, infrastructure is damaged, and lives are lost: all due to an outdated and
           poorly understood drainage system.
         </p>
         <p>
@@ -178,7 +178,7 @@ function Problem() {
     >
       <div className="space-y-10 font-sans text-base leading-relaxed text-[var(--forest-deep)]/80">
         <p>
-          Uganda — and Kampala in particular — suffers from chronic poor drainage. When heavy
+          Uganda: and Kampala in particular: suffers from chronic poor drainage. When heavy
           rainfall occurs, roads flood, properties are damaged, and transportation networks
           collapse. The root cause is not just the volume of rainfall, but the lack of intelligent
           infrastructure planning that accounts for Kampala's complex and hilly terrain.
@@ -213,7 +213,7 @@ function Incidents() {
       date: "March 2025",
       title: "Kampala Flash Floods",
       body:
-        "Torrential rainfall killed at least 6–7 people including two minors. Areas affected: Clock Tower, Kawempe, Natete, Kamwokya, Northern Bypass, Banda, Kyambogo, Kinawataka, Sonde. The KCCA Executive Director called it a 'once-in-50-years storm' citing 80mm of rainfall — but experts noted flooding occurs with almost every significant downpour. The Nsobe river overflowed; hundreds of travelers stranded; businesses shut down.",
+        "Torrential rainfall killed at least 6–7 people including two minors. Areas affected: Clock Tower, Kawempe, Natete, Kamwokya, Northern Bypass, Banda, Kyambogo, Kinawataka, Sonde. The KCCA Executive Director called it a 'once-in-50-years storm' citing 80mm of rainfall: but experts noted flooding occurs with almost every significant downpour. The Nsobe river overflowed; hundreds of travelers stranded; businesses shut down.",
       src: "The Independent Uganda · GDACS · Daily Monitor, March 26–30, 2025",
     },
     {
@@ -225,7 +225,7 @@ function Incidents() {
     },
     {
       date: "September 2024",
-      title: "Kasese — River Nyamwamba",
+      title: "Kasese, River Nyamwamba",
       body:
         "Two killed; 1,469 households affected across thirteen villages; more than 120 homes lost.",
       src: "ReliefWeb · IFRC GO, 2024",
@@ -283,7 +283,7 @@ function RootCauses() {
     },
     {
       t: "Outdated and blocked drainage",
-      d: "Kampala's drainage system was built decades ago and was never designed to handle the city's current population or rainfall intensity. NEMA reports around 60% of urban waste is improperly disposed of — much of it ends up blocking drains. The Nakivubo Channel, the main drainage artery running through all five city divisions, handles more than half of Kampala's stormwater. KCCA's annual budget of UGX 827 billion had zero allocation for new drainage channels at one point.",
+      d: "Kampala's drainage system was built decades ago and was never designed to handle the city's current population or rainfall intensity. NEMA reports around 60% of urban waste is improperly disposed of: much of it ends up blocking drains. The Nakivubo Channel, the main drainage artery running through all five city divisions, handles more than half of Kampala's stormwater. KCCA's annual budget of UGX 827 billion had zero allocation for new drainage channels at one point.",
       src: "Daily Monitor · Watchdog Uganda · NEMA Report, 2025",
     },
     {
@@ -333,19 +333,19 @@ function Solution() {
           <div className="mt-6 space-y-6">
             <Detail
               k="3D Terrain Modeling"
-              v="Using freely available satellite imagery and elevation data (USGS, Google Earth, Copernicus), TRACE builds a high-resolution 3D digital model of Kampala's terrain — capturing slopes, valleys, hills, and existing drainage infrastructure."
+              v="Using Copernicus GLO-10 elevation data and OpenStreetMap drainage layers, TRACE builds a high-resolution digital model of Kampala's terrain, capturing slopes, valleys, hills, and existing drainage infrastructure at 10m resolution."
             />
             <Detail
-              k="AI Water Flow Simulation"
-              v="An AI model trained using physics-based water flow principles and terrain data simulates how water moves across Kampala during rainfall. It accounts for gravity, slope gradients, soil absorption, road surfaces, and existing pipe capacity."
+              k="Water Flow Simulation"
+              v="WhiteboxTools runs proven D8 flow direction and accumulation algorithms on the conditioned DEM. This produces an accurate map of every natural drainage path across the terrain without requiring a custom-trained neural network."
             />
             <Detail
               k="Drainage Intelligence Engine"
-              v="The AI analyzes the 3D model and water-flow simulation to identify bottlenecks, pipes that should be added in flood-prone zones, infrastructure that should be removed or rerouted, and priority zones for immediate intervention."
+              v="PyTorch and XGBoost analyze the gap between where water accumulates and where OSM drainage infrastructure exists. High accumulation with no nearby drain equals a recommendation zone. Output is a ranked list of coordinates with severity scores and suggested pipe routing."
             />
             <Detail
               k="Visualization Dashboard"
-              v="A web-based dashboard built with free tools lets city authorities view the 3D terrain model, see real-time and simulated flow patterns, explore AI recommendations, and compare before-and-after scenarios for proposed infrastructure changes."
+              v="A Streamlit dashboard embeds Pydeck for 3D terrain, Kepler.gl for flow heatmaps and risk layers, and Folium as a 2D fallback. City authorities can view recommendations, compare before-and-after scenarios, and monitor simulated sensor alerts in one interface."
             />
           </div>
         </div>
@@ -398,12 +398,12 @@ function Features() {
     ["Government Officials", "Policy and budget decision makers", "Evidence-based investment priorities"],
   ];
   const features = [
-    ["3D Terrain Model", "3D map of Kampala built from open satellite and elevation data", "P0 — Must Have"],
-    ["Water Flow Simulation", "AI model simulating water movement across terrain", "P0 — Must Have"],
-    ["Drainage Recommendations", "AI suggestions for pipe additions, removals, and rerouting", "P0 — Must Have"],
-    ["Sensor Visualization", "Simulated sensor placement shown on the 3D model", "P1 — Should Have"],
-    ["Web Dashboard", "Interactive UI for viewing terrain, flow, and recommendations", "P1 — Should Have"],
-    ["Flood Risk Alerts", "Threshold-based alerts for high-risk drainage zones", "P2 — Nice to Have"],
+    ["3D Terrain Model", "3D map of Kampala built from open satellite and elevation data", "P0: Must Have"],
+    ["Water Flow Simulation", "AI model simulating water movement across terrain", "P0: Must Have"],
+    ["Drainage Recommendations", "AI suggestions for pipe additions, removals, and rerouting", "P0: Must Have"],
+    ["Sensor Visualization", "Simulated sensor placement shown on the 3D model", "P1: Should Have"],
+    ["Web Dashboard", "Interactive UI for viewing terrain, flow, and recommendations", "P1: Should Have"],
+    ["Flood Risk Alerts", "Threshold-based alerts for high-risk drainage zones", "P2: Nice to Have"],
   ];
   return (
     <Section index="06" label="Target Users & Key Features" tone="tan">
@@ -455,13 +455,19 @@ function Features() {
 /* ───────── TECH STACK ───────── */
 function TechStack() {
   const stack: [string, string, string][] = [
-    ["Compute", "Google Colab (Free)", "Run all AI and data processing — no local hardware needed"],
-    ["Terrain Data", "USGS, Copernicus, Google Earth Engine", "Free satellite imagery and elevation data for Kampala"],
-    ["Mapping", "QGIS (Free)", "Process and analyze geographic data"],
-    ["AI / ML", "TensorFlow, PyTorch, NumPy (Free)", "Water flow simulation and drainage analysis models"],
-    ["3D Visualization", "Plotly, Pydeck, or Three.js (Free)", "Render 3D terrain and flow models in the browser"],
-    ["Dashboard", "Streamlit or Gradio (Free)", "Web interface for the platform — zero hosting cost"],
-    ["Hardware Sim", "Python simulation layer", "Simulate IoT sensor data within the model"],
+    ["Compute", "Google Colab (Free T4 GPU)", "All heavy processing runs in the cloud. Zero local hardware required."],
+    ["Terrain DEM", "Copernicus GLO-10", "10m resolution, plus or minus 4m vertical accuracy. Free GeoTIFF download, no account needed. Best available free DEM for Kampala."],
+    ["Drainage Data", "OpenStreetMap via Overpass Turbo", "Query waterway=drain, culvert, and ditch layers for Kampala. Community-mapped existing drain network, free and current."],
+    ["Geo Processing", "Rasterio + GDAL + GeoPandas", "Rasterio parses GeoTIFF elevation files. GeoPandas handles OSM vector layers. QGIS for visual QA during development."],
+    ["DEM Conditioning", "WhiteboxTools: BreachDepressionsLeastCost", "Critical preprocessing step. Fixes flat valley floors in the GLO-10 DEM to force hydrologically correct water routing."],
+    ["Hydrology Engine", "WhiteboxTools: D8 Flow Direction + Accumulation", "Replaces a custom-trained AI model for water physics. Proven deterministic hydrology algorithms. Faster and more accurate than a neural net for drainage routing."],
+    ["AI / ML", "PyTorch + XGBoost", "Gap analysis between flow accumulation output and OSM drain coverage. Flood risk scoring per grid cell. Not used for water physics."],
+    ["3D Visualization", "Pydeck (DeckGL)", "Geospatial-native 3D terrain renderer. Embeds directly in Streamlit. Purpose-built for this use case, unlike Three.js."],
+    ["Pitch 3D", "CesiumJS", "Cinematic 3D terrain flythrough for the hackathon presentation. Runs in browser, free tier."],
+    ["Geo Layers", "Kepler.gl", "Flow accumulation heatmaps, drain network overlays, and flood risk zones. Uber open-source, zero code required for layer rendering."],
+    ["Dashboard", "Streamlit", "Embeds Pydeck, Plotly, and Kepler.gl natively. Free hosting on Streamlit Cloud. No DevOps."],
+    ["2D Fallback", "Folium", "Leaflet wrapper in Python. Lightweight 2D drain overlay for devices that cannot handle 3D rendering."],
+    ["Sensor Simulation", "NumPy (synthetic data)", "Generates synthetic water level readings at identified bottleneck points. Feeds threshold-based alert UI in the dashboard."],
   ];
   return (
     <Section
@@ -470,6 +476,14 @@ function TechStack() {
       label="Technical Architecture"
       title="100% free. End to end."
     >
+      <div className="mb-10 space-y-4 font-sans text-base leading-relaxed text-[var(--forest-deep)]/80">
+        <p>
+          Every tool in this stack is free and open-source. All heavy computation runs on Google Colab, eliminating local hardware constraints entirely. The stack is optimized for Kampala specifically: Copernicus GLO-10 terrain data combined with OpenStreetMap drainage layers gives a dual-source foundation that no single satellite DEM can provide alone.
+        </p>
+        <p>
+          The key architectural decision is separating water physics from machine learning. WhiteboxTools handles proven deterministic hydrology. PyTorch and XGBoost handle the gap analysis layer: comparing where water flows against where drainage infrastructure exists today.
+        </p>
+      </div>
       <div className="divide-y divide-[var(--forest)]/10 border-y border-[var(--forest)]/10">
         {stack.map(([layer, tool, purpose], i) => (
           <Reveal
@@ -492,15 +506,15 @@ function TechStack() {
 /* ───────── DATA FLOW ───────── */
 function DataFlow() {
   const steps = [
-    "Pull elevation and satellite data for Kampala from open data sources.",
-    "Build 3D terrain model in QGIS and export to Python.",
-    "Run AI water flow simulation on the terrain model in Google Colab.",
-    "AI engine analyzes bottlenecks and generates drainage recommendations.",
-    "Results are visualized on the web dashboard with before/after comparisons.",
-    "(Simulated) sensor data feeds into the dashboard to show real-time monitoring capability.",
+    "Download Copernicus GLO-10 GeoTIFF for the target neighborhood bounding box. Pull OpenStreetMap drain, culvert, and waterway features via Overpass Turbo API.",
+    "Run DEM conditioning in WhiteboxTools using BreachDepressionsLeastCost. This step is mandatory: it corrects flat valley floors in the raw elevation data so water routing is hydrologically accurate.",
+    "Compute D8 Flow Direction and D8 Flow Accumulation rasters in WhiteboxTools. This produces a map of every natural drainage path and accumulation hotspot across the terrain.",
+    "Overlay the flow accumulation raster against the OSM drain network using GeoPandas spatial join. Score each high-accumulation cell by distance to the nearest existing drain.",
+    "PyTorch or XGBoost classifies scored cells into flood risk zones. Cells with high accumulation and no nearby drain infrastructure become the AI drainage recommendations.",
+    "Results render on the Streamlit dashboard via Pydeck for 3D terrain, Kepler.gl for flow and risk layers, and Folium for 2D fallback. Synthetic sensor data from NumPy feeds the real-time alert panel.",
   ];
   return (
-    <Section index="08" label="Data Flow" tone="tan">
+    <Section index="08" label="Data Pipeline" tone="tan">
       <ol className="space-y-8">
         {steps.map((s, i) => (
           <Reveal key={i} delay={i * 0.04} as="li" className="grid grid-cols-[40px_1fr] gap-6">
@@ -520,11 +534,11 @@ function DataFlow() {
 /* ───────── HACKATHON GAME PLAN ───────── */
 function GamePlan() {
   const days: [string, string, string, string][] = [
-    ["Day 1", "Collect terrain and elevation data for one Kampala neighborhood", "USGS, Google Earth Engine, QGIS", "Raw elevation dataset ready for modeling"],
-    ["Day 2", "Build 3D terrain model and run basic water flow simulation", "Google Colab, Python, NumPy", "Working simulation showing water movement"],
-    ["Day 3", "Train/configure AI model to identify drainage bottlenecks", "TensorFlow / PyTorch on Colab", "AI recommendations for pipe placement"],
-    ["Day 4", "Build web dashboard with 3D visualization and sensor simulation", "Streamlit, Plotly, Pydeck", "Interactive demo ready to show"],
-    ["Day 5", "Polish demo, prepare pitch, rehearse presentation", "Slides + live demo", "Hackathon-ready presentation"],
+    ["Day 1", "Download Copernicus GLO-10 DEM and pull OSM drainage layers for Bwaise", "Overpass Turbo, Rasterio, GeoPandas, QGIS", "Clean elevation dataset and drain network ready for processing"],
+    ["Day 2", "Run DEM conditioning and water flow simulation", "WhiteboxTools on Google Colab, Python, NumPy", "Flow direction and accumulation rasters showing water movement across terrain"],
+    ["Day 3", "Run gap analysis and generate drainage recommendations", "PyTorch or XGBoost on Colab, GeoPandas spatial join", "Ranked list of coordinates where new drainage infrastructure is needed"],
+    ["Day 4", "Build web dashboard with 3D visualization and sensor simulation", "Streamlit, Pydeck, Kepler.gl, Folium, NumPy", "Interactive demo with terrain view, risk zones, and live alert panel"],
+    ["Day 5", "Polish demo, prepare pitch, rehearse presentation", "CesiumJS for 3D flythrough, slides", "Hackathon-ready presentation with live demo"],
   ];
   return (
     <Section index="09" label="Hackathon Game Plan" title="Five days to a working demo.">
@@ -555,7 +569,7 @@ function Scope() {
       <div className="space-y-6 font-sans text-base leading-relaxed text-[var(--forest-deep)]/80">
         <p>
           For the hackathon, the team will focus on one specific neighborhood in Kampala rather
-          than the entire city. This is intentional — a focused, working demo is more compelling
+          than the entire city. This is intentional: a focused, working demo is more compelling
           than a broad, broken one. The pitch will clearly articulate how the system scales
           city-wide.
         </p>
@@ -584,9 +598,9 @@ function GovResponse() {
       src: "KCCA · AllAfrica, March 2026 / December 2025",
     },
     {
-      t: "KCCA Council Resolution — April 3, 2025",
+      t: "KCCA Council Resolution: April 3, 2025",
       d:
-        "A landmark resolution approved a new model: partnering with competent local investors to upgrade and cover Kampala's open drainage channels under strict KCCA supervision. Vision: a Kampala with closed, modern underground drainage systems, free from solid waste blockages. Inspired by the success of the Nakivubo Jugula channel project by Ham Enterprises — the area remained dry during the March 2025 floods. Funding to come from public-private partnerships as government and donor funding declines.",
+        "A landmark resolution approved a new model: partnering with competent local investors to upgrade and cover Kampala's open drainage channels under strict KCCA supervision. Vision: a Kampala with closed, modern underground drainage systems, free from solid waste blockages. Inspired by the success of the Nakivubo Jugula channel project by Ham Enterprises: the area remained dry during the March 2025 floods. Funding to come from public-private partnerships as government and donor funding declines.",
       src: "Watchdog Uganda · PML Daily · UG Bulletin, April 2025",
     },
     {
@@ -604,7 +618,7 @@ function GovResponse() {
     {
       t: "Greater Kampala Integrated Flood Resilience (GKIFR) Partnership",
       d:
-        "A nature-based solutions initiative by KCCA with the Ministry of Water and Environment, Uganda Manufacturers Association, and international funders (EU, German BMZ, UK DFID). Pilot rainwater harvesting at 7 sites including schools and markets — Kitebi Secondary School received an 80,000-litre tank. Focus on integrating green infrastructure into urban planning.",
+        "A nature-based solutions initiative by KCCA with the Ministry of Water and Environment, Uganda Manufacturers Association, and international funders (EU, German BMZ, UK DFID). Pilot rainwater harvesting at 7 sites including schools and markets: Kitebi Secondary School received an 80,000-litre tank. Focus on integrating green infrastructure into urban planning.",
       src: "KCCA, 2023–2024",
     },
   ];
@@ -647,7 +661,7 @@ function Gap() {
       <p className="mb-12 font-sans text-base leading-relaxed text-[var(--forest-deep)]/80">
         Despite ongoing physical infrastructure works, Uganda has no smart, data-driven system for
         monitoring, predicting, or intelligently optimizing its drainage network. Current responses
-        are almost entirely reactive — authorities respond after flooding occurs, not before.
+        are almost entirely reactive: authorities respond after flooding occurs, not before.
       </p>
       <div className="grid grid-cols-[1fr_1fr] gap-px overflow-hidden border border-[var(--forest)]/15 bg-[var(--forest)]/15">
         <div className="bg-[var(--paper)] p-6 font-sans text-xs uppercase tracking-[0.2em] text-[var(--forest-deep)]/50">
@@ -672,7 +686,7 @@ function Gap() {
           "Every year it's the same story. Wetlands are filled, water has nowhere to go, and roads
           become rivers. Without serious reforms, we'll keep seeing this."
           <span className="ml-2 not-italic text-[var(--forest-deep)]/50">
-            — Paul Senoga, environmental policy analyst
+           Paul Senoga, environmental policy analyst
           </span>
         </p>
         <p>
@@ -680,7 +694,7 @@ function Gap() {
           will continue experiencing senseless loss of lives, business and property as a result of
           extreme weather episodes."
           <span className="ml-2 not-italic text-[var(--forest-deep)]/50">
-            — Joel Ssenyonyi, Opposition Leader
+           Joel Ssenyonyi, Opposition Leader
           </span>
         </p>
       </div>
@@ -697,7 +711,7 @@ function Scalability() {
           <h3 className="text-xl tracking-tight md:text-2xl">How it scales</h3>
           <ul className="mt-6 space-y-3">
             {[
-              "The 3D modeling approach works for any geographic area — expanding from one neighborhood to all of Kampala is a matter of adding more data, not redesigning the system.",
+              "The 3D modeling approach works for any geographic area: expanding from one neighborhood to all of Kampala is a matter of adding more data, not redesigning the system.",
               "The AI model improves as more sensor data is added over time.",
               "The platform can be adapted for other Ugandan cities and eventually across East Africa.",
             ].map((t) => (
@@ -729,7 +743,7 @@ function Scalability() {
           <p className="mt-4">
             Poor drainage in Kampala costs the economy millions of dollars annually in road damage,
             property loss, and lost productivity. TRACE gives city planners an evidence-based tool
-            to make smarter infrastructure decisions — turning a reactive system into a proactive
+            to make smarter infrastructure decisions: turning a reactive system into a proactive
             one.
           </p>
         </div>
@@ -829,7 +843,7 @@ function Vision() {
         <Reveal delay={0.1}>
           <p className="mt-8 font-sans text-base leading-relaxed text-[var(--forest-deep)]/75">
             The MVP is deliberately scoped to be achievable in one week with zero budget. Focus on
-            making the demo clear and impactful — judges respond to a compelling problem, a credible
+            making the demo clear and impactful: judges respond to a compelling problem, a credible
             solution, and visible potential. All team members should have Google accounts to access
             Google Colab. Divide tasks as follows: one person handles data collection and terrain
             modeling, one handles the AI simulation, and one handles the dashboard and presentation.
@@ -846,7 +860,7 @@ function Footer() {
   return (
     <footer className="border-t border-[var(--forest)]/10 bg-[var(--paper)] py-10">
       <div className="mx-auto flex max-w-3xl flex-col gap-4 px-6 font-sans text-xs uppercase tracking-[0.2em] text-[var(--forest-deep)]/50 md:flex-row md:items-center md:justify-between">
-        <div>TRACE — Terrain Runoff Analysis &amp; City Engineering</div>
+        <div>TRACE: Terrain Runoff Analysis &amp; City Engineering</div>
         <div>Kampala · 2026</div>
       </div>
     </footer>
