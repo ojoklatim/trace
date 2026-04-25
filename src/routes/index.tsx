@@ -457,33 +457,54 @@ function TechStack() {
   const stack: [string, string, string][] = [
     ["Compute", "Google Colab (Free T4 GPU)", "All heavy processing runs in the cloud. Zero local hardware required."],
     ["Terrain DEM", "Copernicus GLO-10", "10m resolution, plus or minus 4m vertical accuracy. Free GeoTIFF download, no account needed. Best available free DEM for Kampala."],
-    ["Drainage Data", "OpenStreetMap via Overpass Turbo", "Query waterway=drain, culvert, and ditch layers for Kampala. Community-mapped existing drain network, free and current."],
-    ["Geo Processing", "Rasterio + GDAL + GeoPandas", "Rasterio parses GeoTIFF elevation files. GeoPandas handles OSM vector layers. QGIS for visual QA during development."],
-    ["DEM Conditioning", "WhiteboxTools: BreachDepressionsLeastCost", "Critical preprocessing step. Fixes flat valley floors in the GLO-10 DEM to force hydrologically correct water routing."],
-    ["Hydrology Engine", "WhiteboxTools: D8 Flow Direction + Accumulation", "Replaces a custom-trained AI model for water physics. Proven deterministic hydrology algorithms. Faster and more accurate than a neural net for drainage routing."],
-    ["AI / ML", "PyTorch + XGBoost", "Gap analysis between flow accumulation output and OSM drain coverage. Flood risk scoring per grid cell. Not used for water physics."],
-    ["3D Visualization", "Pydeck (DeckGL)", "Geospatial-native 3D terrain renderer. Embeds directly in Streamlit. Purpose-built for this use case, unlike Three.js."],
+    ["Watershed Base", "HydroSHEDS (WWF)", "Pre-conditioned SRTM drainage basins covering Uganda, processed specifically for hydrological analysis. Validates GLO-10 watershed boundaries and provides stream order data showing which channels carry the most water."],
+    ["Drainage Data", "OpenStreetMap via Overpass Turbo", "Two queries run in parallel: waterway=drain/culvert/ditch for existing drain geometry, and highway=* with surface=* tags for road surfaces. Roads are modeled as impermeable, forcing runoff to their edges and into side drains."],
+    ["Street Imagery", "Mapillary API", "Free, open street-level photo platform with coverage across Kampala's main roads. Images are pulled for the target neighborhood via the Mapillary API at zero cost. Used as ground truth for drain locations that are not recorded in OSM."],
+    ["Drain Detection CV", "YOLOv8 on Colab", "Object detection model run on Mapillary images to locate drain inlets, culvert openings, and blocked channels at street level. The base YOLOv8 model is pretrained and free. Fine-tuning on Kampala drain images improves accuracy for local infrastructure types."],
+    ["Geo Processing", "Rasterio + GDAL + GeoPandas", "Rasterio parses GeoTIFF elevation files from GLO-10 and HydroSHEDS. GeoPandas handles all OSM vector layers and Mapillary detection outputs. QGIS for visual QA during development."],
+    ["DEM Conditioning", "WhiteboxTools: BreachDepressionsLeastCost", "Corrects flat valley floors in the raw GLO-10 DEM so water routing is hydrologically accurate. Mandatory before any flow analysis."],
+    ["Stream Burning", "WhiteboxTools: BurnStreamsAtRoads", "Burns Mapillary-detected drain locations and OSM road drainage geometry directly into the conditioned DEM as forced flow paths. This is what elevates analysis from neighborhood scale to street-corridor scale."],
+    ["Hydrology Engine", "WhiteboxTools: D8 Flow Direction + Accumulation", "Proven deterministic hydrology algorithms run on the stream-burned DEM. Produces a map of every drainage path and accumulation hotspot now anchored to real street-level infrastructure."],
+    ["AI / ML", "PyTorch + XGBoost", "Gap analysis between flow accumulation output and the combined OSM and Mapillary drain coverage. Flood risk scoring per grid cell. Produces the ranked recommendation list for new infrastructure."],
+    ["3D Visualization", "Pydeck (DeckGL)", "Geospatial-native 3D terrain renderer. Embeds directly in Streamlit. Displays the stream-burned DEM with drain network and risk zone overlays."],
     ["Pitch 3D", "CesiumJS", "Cinematic 3D terrain flythrough for the hackathon presentation. Runs in browser, free tier."],
-    ["Geo Layers", "Kepler.gl", "Flow accumulation heatmaps, drain network overlays, and flood risk zones. Uber open-source, zero code required for layer rendering."],
-    ["Dashboard", "Streamlit", "Embeds Pydeck, Plotly, and Kepler.gl natively. Free hosting on Streamlit Cloud. No DevOps."],
+    ["Geo Layers", "Kepler.gl", "Flow accumulation heatmaps, drain network overlays, Mapillary detection points, and flood risk zones in one interface. Zero code required for layer rendering."],
+    ["Dashboard", "Streamlit", "Embeds Pydeck, Kepler.gl, and Folium natively. Free hosting on Streamlit Cloud. No DevOps."],
     ["2D Fallback", "Folium", "Leaflet wrapper in Python. Lightweight 2D drain overlay for devices that cannot handle 3D rendering."],
     ["Sensor Simulation", "NumPy (synthetic data)", "Generates synthetic water level readings at identified bottleneck points. Feeds threshold-based alert UI in the dashboard."],
   ];
+
   return (
     <Section
       id="system"
       index="07"
       label="Technical Architecture"
-      title="100% free. End to end."
+      title="100% free. Street-level precision."
     >
-      <div className="mb-10 space-y-4 font-sans text-base leading-relaxed text-[var(--forest-deep)]/80">
+      <div className="mb-12 space-y-4 font-sans text-base leading-relaxed text-[var(--forest-deep)]/80">
         <p>
-          Every tool in this stack is free and open-source. All heavy computation runs on Google Colab, eliminating local hardware constraints entirely. The stack is optimized for Kampala specifically: Copernicus GLO-10 terrain data combined with OpenStreetMap drainage layers gives a dual-source foundation that no single satellite DEM can provide alone.
+          Every tool in this stack is free and open-source. All heavy computation runs on Google Colab, eliminating local hardware constraints entirely. The stack achieves street-level drainage precision by fusing four independent data sources: GLO-10 terrain, HydroSHEDS watershed geometry, OpenStreetMap drainage and road layers, and Mapillary street-level imagery processed with computer vision.
         </p>
         <p>
-          The key architectural decision is separating water physics from machine learning. WhiteboxTools handles proven deterministic hydrology. PyTorch and XGBoost handle the gap analysis layer: comparing where water flows against where drainage infrastructure exists today.
+          No single source is sufficient alone. GLO-10 gives terrain shape but misses street-scale features. OSM has mapped channels but incomplete coverage. Mapillary fills the gaps OSM cannot see. HydroSHEDS validates that watershed boundaries are hydrologically correct before any analysis begins. Together they form a composite ground model that reflects how water actually moves through Kampala's streets.
+        </p>
+        <p>
+          The critical step tying everything together is stream burning. After WhiteboxTools conditions the DEM and Mapillary detections are georeferenced, those real-world drain locations are burned into the elevation model as forced flow paths. From that point, all hydrology calculations follow actual infrastructure rather than raw terrain alone. This is what closes the gap between city-block analysis and street-corridor precision.
         </p>
       </div>
+
+      <div className="mb-12 border border-[var(--forest)]/15 p-6 font-sans text-sm leading-relaxed text-[var(--forest-deep)]/80">
+        <p className="mb-4 text-xs uppercase tracking-[0.2em] text-[var(--forest)]/60">How the layers tie together</p>
+        <div className="space-y-2 font-mono text-xs text-[var(--forest-deep)]/70">
+          <p>GLO-10 + HydroSHEDS  →  validated terrain with correct watershed boundaries</p>
+          <p>OSM roads + drains   →  impermeable surfaces, known channel geometry</p>
+          <p>Mapillary + YOLOv8   →  street-level drain detections not in OSM</p>
+          <p>WhiteboxTools        →  condition DEM, burn all drain sources, run D8 flow</p>
+          <p>PyTorch + XGBoost    →  gap analysis, flood risk scoring, ranked recommendations</p>
+          <p>Streamlit + Pydeck   →  dashboard rendering for KCCA decision makers</p>
+        </div>
+      </div>
+
       <div className="divide-y divide-[var(--forest)]/10 border-y border-[var(--forest)]/10">
         {stack.map(([layer, tool, purpose], i) => (
           <Reveal
@@ -506,12 +527,14 @@ function TechStack() {
 /* ───────── DATA FLOW ───────── */
 function DataFlow() {
   const steps = [
-    "Download Copernicus GLO-10 GeoTIFF for the target neighborhood bounding box. Pull OpenStreetMap drain, culvert, and waterway features via Overpass Turbo API.",
-    "Run DEM conditioning in WhiteboxTools using BreachDepressionsLeastCost. This step is mandatory: it corrects flat valley floors in the raw elevation data so water routing is hydrologically accurate.",
-    "Compute D8 Flow Direction and D8 Flow Accumulation rasters in WhiteboxTools. This produces a map of every natural drainage path and accumulation hotspot across the terrain.",
-    "Overlay the flow accumulation raster against the OSM drain network using GeoPandas spatial join. Score each high-accumulation cell by distance to the nearest existing drain.",
-    "PyTorch or XGBoost classifies scored cells into flood risk zones. Cells with high accumulation and no nearby drain infrastructure become the AI drainage recommendations.",
-    "Results render on the Streamlit dashboard via Pydeck for 3D terrain, Kepler.gl for flow and risk layers, and Folium for 2D fallback. Synthetic sensor data from NumPy feeds the real-time alert panel.",
+    "Download Copernicus GLO-10 GeoTIFF and HydroSHEDS basin data for the target neighborhood bounding box. Pull OSM drain, culvert, waterway, and road surface layers via Overpass Turbo in parallel.",
+    "Validate watershed boundaries using HydroSHEDS stream order data. This confirms the GLO-10 terrain is correctly oriented before any conditioning begins.",
+    "Run DEM conditioning in WhiteboxTools using BreachDepressionsLeastCost. Corrects flat valley floors so water routing follows real terrain, not DEM artifacts.",
+    "Pull Mapillary street-level images for the target area via the free API. Run YOLOv8 object detection on each image to locate drain inlets, culvert openings, and blocked channels not recorded in OSM. Georeference each detection to its GPS coordinate.",
+    "Burn all drain sources into the conditioned DEM using WhiteboxTools BurnStreamsAtRoads. This merges OSM drain geometry, OSM road edge drainage, and Mapillary-detected drain locations into the elevation model as forced flow paths. This is the step that achieves street-level precision.",
+    "Compute D8 Flow Direction and D8 Flow Accumulation on the stream-burned DEM. Flow now follows real infrastructure at street-corridor scale, not raw terrain alone.",
+    "Run gap analysis using GeoPandas spatial join and PyTorch or XGBoost. Score each high-accumulation cell by distance to the nearest confirmed drain from any source. High score plus no drain equals a recommendation zone.",
+    "Render results on the Streamlit dashboard: Pydeck for 3D terrain with burn lines visible, Kepler.gl for flow heatmaps and risk zones with Mapillary detection points, Folium for 2D fallback. NumPy synthetic sensor data feeds the real-time alert panel.",
   ];
   return (
     <Section index="08" label="Data Pipeline" tone="tan">
@@ -534,10 +557,10 @@ function DataFlow() {
 /* ───────── HACKATHON GAME PLAN ───────── */
 function GamePlan() {
   const days: [string, string, string, string][] = [
-    ["Day 1", "Download Copernicus GLO-10 DEM and pull OSM drainage layers for Bwaise", "Overpass Turbo, Rasterio, GeoPandas, QGIS", "Clean elevation dataset and drain network ready for processing"],
-    ["Day 2", "Run DEM conditioning and water flow simulation", "WhiteboxTools on Google Colab, Python, NumPy", "Flow direction and accumulation rasters showing water movement across terrain"],
-    ["Day 3", "Run gap analysis and generate drainage recommendations", "PyTorch or XGBoost on Colab, GeoPandas spatial join", "Ranked list of coordinates where new drainage infrastructure is needed"],
-    ["Day 4", "Build web dashboard with 3D visualization and sensor simulation", "Streamlit, Pydeck, Kepler.gl, Folium, NumPy", "Interactive demo with terrain view, risk zones, and live alert panel"],
+    ["Day 1", "Download GLO-10 DEM, HydroSHEDS basins, and pull OSM drainage and road layers for Bwaise", "Overpass Turbo, Rasterio, GeoPandas, QGIS", "Validated terrain dataset with watershed boundaries and drain network ready"],
+    ["Day 2", "Pull Mapillary imagery, run YOLOv8 drain detection, condition DEM and burn all drain sources", "Mapillary API, YOLOv8 on Colab, WhiteboxTools: BreachDepressionsLeastCost + BurnStreamsAtRoads", "Stream-burned DEM with street-level drain locations fused into the elevation model"],
+    ["Day 3", "Run D8 flow simulation, gap analysis, and generate ranked drainage recommendations", "WhiteboxTools D8, PyTorch or XGBoost on Colab, GeoPandas spatial join", "Ranked list of coordinates with flood risk scores where new drainage is needed"],
+    ["Day 4", "Build web dashboard with 3D terrain, risk layers, detection points, and sensor alert panel", "Streamlit, Pydeck, Kepler.gl, Folium, NumPy", "Interactive demo with terrain view, Mapillary detection overlay, risk zones, and live alerts"],
     ["Day 5", "Polish demo, prepare pitch, rehearse presentation", "CesiumJS for 3D flythrough, slides", "Hackathon-ready presentation with live demo"],
   ];
   return (
